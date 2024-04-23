@@ -1,8 +1,30 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Cute+Font&display=swap');
+
+* {
+    font-size: 20px;
+    font-family: "Cute Font", sans-serif;
 }
 
-a {
-  color: #00B7FF;
+.bottom {
+    text-align: center;
+    margin: 100px 0px;
+    
 }
+
+h1 {
+    text-align: center;
+    padding: 20px 0px; 
+}
+
+.ellipsis { /* 말줄임 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+  }
+  
+  .title {
+    color : green;
+    font-size: 17px;
+  }

@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Dongle&display=swap');
+
+* {
+  font-size: 30px;
+  padding: 0px; /*여백*/
+  font-family: "Dongle", sans-serif;
+}
+
+
+a {
+  color: #00B7FF;
+}
+
+.div_page{
+  width: 960px;
+  margin: 0px auto; 
+  /* background: gray;
+  color: white; */
+}
+
+.div_bottom {
+  text-align: center;
+}
+
+.div_menu .item{
+  margin: 0px 10px;
+}
+
+.div_menu{
+  margin: 20px 0px;
+}
+
+.div_home {
+  margin: 50px 0px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.title, .price {
+  font-size: 10px;
+  color: green;
+}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <div id="divPage">
+      <div id="divTop">
+        <h1>[<%= title %>]</h1>
+      </div>
+      <div id="divCenter">
+        <div id="divMenu">
+          <div class="item"><a href="#">교수관리</a></div>
+          <div class="item"><a href="#">학생관리</a></div>
+          <div class="item"><a href="#">강좌관리</a></div>
+          <div class="item"><a href="#">수강신청</a></div>
+          <div style="float: right;"><a href="/user/login">로그인</a></div>
+        </div>
+        <div id="divContent">
+          <%-include(pageName)%>
+        </div>
+      </div>
+      <div id="divBottom">
+        <h4>Copyright 인천일보아카데미 All Rights Reserved.</h4>
+      </div>
+    </div>
+  </body>
+</html>

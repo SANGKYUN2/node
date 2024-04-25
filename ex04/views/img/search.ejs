@@ -1,0 +1,27 @@
+<h1><%=title%></h1>
+<div id="div_img"></div>
+<script id="temp_img" type="X-handlebars-template">
+    {{#each documents}}
+        <div>{{i}}</div>
+
+    {{/each}}
+</script>
+
+<script>
+    getData();
+    function getData(){
+        $.ajax({
+            type : "get",
+            url : "https://dapi.kakao.com/v2/search/image",
+            dataType : "json",
+            data:{query: '아이유', page:1, size:5},
+            headers : {"Authorization" : "KakaoAK 9a5fa7c035339e405f49a5347ceb488f"}, //headers : 인증키
+            success : function(data) {
+                //alert("성공");
+                console.log(data);
+                const temp=Handlebars.compile($("#temp_img").html());
+                $("#div_img").html(temp(data));
+            }
+        });
+    }
+</script>

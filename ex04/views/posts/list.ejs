@@ -1,0 +1,54 @@
+<h1><%=title%></h1>
+<div class="text-end mb-3" id="div-write" style="display: none;">
+    <a href="/posts/insert"><button class="btn btn-info">글쓰기</button></a>
+</div>
+<div id="div_posts"></div>
+<script id="temp_posts" type="x-handlebars-template">
+    <table class="table table-info table-hover">
+        <colgroup>
+            <col width="10%"/>
+            <col width="10%"/>
+            <col width="45%"/>
+            <col width="15%"/>
+            <col width="20%"/>
+        </colgroup>
+        <tr>
+            <td>ID</td><td>Title</td><td>contents</td><td>Writer</td><td>Date</td>
+        </tr>
+        {{#each .}}
+            <tr>
+                <td>{{pid}}</td>
+                <td><div class="ellipsis4"><a href="/posts/read?pid={{pid}}">{{title}}</a></div></td>
+                <td><div class="ellipsis4">{{contents}}</div></td>
+                <td>{{writer}}</td>
+                <td>{{fdate}}</td>
+            </tr>
+        {{/each}}
+    </table>
+
+</script>
+
+
+
+<script>
+    getData();
+    if(uid){
+        $("#div-write").show();
+    }
+    else{
+        $("#div-write").hide();
+    }
+    function getData() {
+        $.ajax({
+            type : "get",
+            url : "/posts/list.json",
+            dataType : "json",
+            success : function(data) {
+                console.log(data);
+                const temp = Handlebars.compile($("#temp_posts").html());
+                $("#div_posts").html(temp(data));
+            }
+
+        });
+    }
+</script>

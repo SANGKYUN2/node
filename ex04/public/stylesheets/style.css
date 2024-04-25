@@ -44,3 +44,12 @@ h1 {
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
   }
+
+  
+  .ellipsis4 { /* 말줄임 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+  }

@@ -40,7 +40,9 @@
                         alert("비밀번호가 일치하지 않습니다.")
                     }
                     else{
-                        alert("성공");
+                        alert("로그인에 성공했습니다.");
+                        sessionStorage.setItem('uid', uid); //로그인한 uid를 uid에 넣고 저장
+                        location.href="/"; //홈페이지로 이동
                     }
                 }
             })

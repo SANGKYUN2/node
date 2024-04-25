@@ -1,0 +1,29 @@
+<h1><%=title%></h1>
+<div id="div_web"></div>
+<script id="temp_web" type="X-handlebars-template">
+    {{#each documents}}
+        <div>{{contents}}</div>
+        <div>{{datetime}}</div>
+        <div>{{title}}</div>
+        <div>{{url}}</div>
+    {{/each}}
+</script>
+
+<script>
+    getData();
+    function getData(){
+        $.ajax({
+            type : "get",
+            url : "https://dapi.kakao.com/v2/search/web",
+            dataType : "json",
+            data:{query: '아이유', page:1, size:5},
+            headers : {"Authorization" : "KakaoAK 9a5fa7c035339e405f49a5347ceb488f"}, //headers : 인증키
+            success : function(data) {
+                //alert("성공");
+                console.log(data);
+                const temp=Handlebars.compile($("#temp_web").html());
+                $("#div_web").html(temp(data));
+            }
+        });
+    }
+</script>

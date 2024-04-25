@@ -25,6 +25,9 @@ app.use('/book', require('./routes/book'));
 app.use('/movie', require('./routes/movie'));
 app.use('/local', require('./routes/local'));
 app.use('/blog', require('./routes/blog'));
+app.use('/posts', require('./routes/posts'));
+app.use('/web', require('./routes/web'));
+app.use('/img', require('./routes/img'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

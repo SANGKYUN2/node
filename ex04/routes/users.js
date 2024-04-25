@@ -33,8 +33,8 @@ router.post('/login', function(req, res){ // POST는 주로 데이터를 생성�
           result=2;
         }
       }
-      console.log({result});
-      res.send({result});
+      console.log({result : result});
+      res.send({result : result});
     });
   });
 

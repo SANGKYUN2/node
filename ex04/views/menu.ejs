@@ -1,29 +1,70 @@
 <nav class="navbar bg-info navbar-expand-lg "data-bs-theme="dark" >
     <div class="container-fluid">
-      <a class="navbar-brand" href="/">Home</a>
+      <a class="navbar-brand" href="/" style="color: black;">Home</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/book">도서검색</a>
+            <a class="nav-link active" aria-current="page" href="/web" style="color: black;">웹문서 검색</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/movie">영화검색</a>
+            <a class="nav-link active" aria-current="page" href="/img" style="color: black;">이미지 검색</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/local">지역검색</a>
+            <a class="nav-link active" aria-current="page" href="/book" style="color: black;">도서 검색</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/blog">블로그검색</a>
+            <a class="nav-link active" aria-current="page" href="/movie" style="color: black;">영화 검색</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/local" style="color: black;">지역 검색</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/blog" style="color: black;">블로그 검색</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/posts" style="color: black;">게시판</a>
           </li>
         </ul>
         <ul class="navbar-nav mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/users/login">로그인</a>
+          <li class="nav-item" id="login">
+            <a class="nav-link active" aria-current="page" href="/users/login" style="color: black;">로그인</a>
+          </li>
+          <li class="nav-item" id="uid" style="display: none;">
+            <a class="nav-link active" aria-current="page" href="/users/mypage" style="color: black;"></a>
+          </li>
+          <li class="nav-item" id="logout" style="display: none;">
+            <a class="nav-link active" aria-current="page" href="#" style="color: black;">로그아웃</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
+
+  <script>
+    const uid=sessionStorage.getItem('uid'); //uid를 가져옴
+    //alert(uid); //uid 출력
+    if(uid) {
+        $("#login").hide();
+        $("#logout").show();
+        $("#uid").show();
+        $("#uid a").html(uid + "님 환영합니다.");
+    }
+    else {
+        $("#login").show();
+        $("#logout").hide();
+        $("#uid").hide();
+    }
+
+    //로그아웃 메뉴를 클릭했을때
+    $("#logout").on("click", "a", function(e){
+        e.preventDefault();
+        if(confirm("로그아웃 하시겠습니까?")){
+            sessionStorage.clear(); //세션값 삭제
+            location.href="/"; //홈페이지로 이동
+        }
+    });
+
+  </script>

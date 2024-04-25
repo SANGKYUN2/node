@@ -1,0 +1,58 @@
+<h1><%=title%></h1>
+<div class="row mb-2">
+    <div class="col-6 col-md-4">
+        <form class="input-group" name="frm">
+            <input class="form-control" name = "query" value="마블" placeholder="검색어">
+            <button class="btn btn-info">검색</button>
+        </form>
+    </div>
+</div>
+<div id="div_movie" class="row"></div>
+<!-- 영화 템플릿 -->
+<script id="temp_movie" type="X-handlebars-template">
+{{#each documents}}
+    <div class = "col-lg-2 col-md-4 col-6 mb-2">
+        <div class = " card">
+            <div class = "card-body">
+                <img src={{thumbnail}} width = "90%">
+            </div>
+            <div class = "card-footer">
+                <div class = "ellipsis title">{{title}}</div>
+            </div>
+        </div>
+    </div>
+{{/each}}
+
+</script>
+
+<script>
+    let query = $(frm.query).val();
+    getData();
+
+    $(frm).on("submit", function(e){ //frm이 서밋될때 e에 들어가있음
+        e.preventDefault();
+        query=$(frm.query).val();
+        if(query=='') {
+            alert("검색어를 입력하세요!");
+        }
+        else{
+            getData();
+        }
+    });
+
+    function getData() {
+        $.ajax({
+            type : "get",
+            url : "https://dapi.kakao.com/v2/search/vclip",
+            dataType : "json",
+            data : {query : query, size : 6, page : 1}, //query : 검색어
+            headers : {"Authorization" : "KakaoAK 9a5fa7c035339e405f49a5347ceb488f"}, //headers : 인증키
+            success : function(data) {
+                //alert("성공");
+                console.log(data);
+                const temp=Handlebars.compile($("#temp_movie").html());
+                $("#div_movie").html(temp(data));
+            }
+        });
+    }
+</script>

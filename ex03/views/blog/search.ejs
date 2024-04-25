@@ -1,0 +1,110 @@
+<h1><%-title%></h1>
+<div class="row mb-2"> <!-- 검색 -->
+    <form class="col-8 mb-4 col-md-4 " name="frm">
+        <div class="input-group">
+            <input name="query" class="form-control" placeholder="검색어" value="맛집">
+            <button class="btn btn-info">검색</button>
+        </div>
+    </form>
+</div>
+<div id="div_blog" style="width: 100%; margin: 0px auto;"></div>
+<div class="text-center my-3"> <!--버튼-->
+    <button class="btn btn-info" id="prev">이전</button>
+    <span class="mx-3" id="page">1</span>
+    <button class="btn btn-info" id="next">다음</button>
+</div>
+<script id="temp_blog" type="X-handlebars-template">
+    {{#each documents}}
+        <div class="row mb-3" url="{{url}}" style="cursor:pointer;">
+            <div class="col-8">
+                <div><a href="{{url}}">{{{title}}}</a></div>
+                <div class="ellipsis3">{{{contents}}}</div>
+                <div class="mt-2" style="font-size : 10px; color : gray;">
+                    <span>{{blogname}}</span> <br>
+                    <span class="ms-3">{{fmtDate datetime}}</span>
+                </div>
+            </div>
+            <div class="col">
+                <img src="{{thumbnail}}">
+            </div>
+        </div>
+    {{/each}}
+</script>
+
+<script>
+    Handlebars.registerHelper("fmtDate", function(date){
+        const yy=date.substr(0, 4);
+        const mm=date.substr(5, 2);
+        const dd=date.substr(8, 2);
+        const fmtDate=`${yy}년${mm}월${dd}일`;
+        return fmtDate;
+    });
+</script>
+
+<script>
+    let query=$(frm.query).val();
+    const size = 3;
+    let page = 1;
+    getData();
+
+    //row를 클릭한 경우
+    $("#div_blog").on("click", ".row", function(){
+        const url=$(this).attr("url");
+        location.href=url;
+    });
+
+    $(frm).on("submit", function(event) {
+        event.preventDefault();
+        query=$(frm.query).val();
+        if(query==""){
+            alert("검색어를 입력하세요!");
+        }
+        else {
+            page=1;
+            getData();
+        }
+    });
+
+    //다음 버튼을 클릭한 경우
+    $("#next").on("click", function() {
+        page++;
+        getData();
+    });
+
+    //이전 버튼을 클릭한 경우
+    $("#prev").on("click", function() {
+        page--;
+        getData();
+    });
+
+    function getData(){ //데이터 불러오기
+        $.ajax({
+            type : "get",
+            url : "	https://dapi.kakao.com/v2/search/blog",
+            headers : {"Authorization" : "KakaoAK 9a5fa7c035339e405f49a5347ceb488f"}, //headers : 인증키
+            dataType : "json",
+            data : {query : query, size : size, page : page },
+            success : function(data){
+                console.log(data);
+                const temp = Handlebars.compile($("#temp_blog").html());
+                $("#div_blog").html(temp(data));
+
+                const last = Math.ceil(data.meta.pageable_count/5);
+                $("#page").html(`<b>${page} / ${last}</b>`);
+                if(page==1) {
+                    $("#prev").attr("disabled", true); //속성 변화 : attr, disabled : 불가능
+                }
+                else {
+                    $("#prev").attr("disabled", false);
+                }
+
+                if(data.meta.is_end) { //마지막 페이지면 넥스트 페이지가 눌리면 안돼
+                    $("#next").attr("disabled", true);
+                }
+                else{
+                    $("#next").attr("disabled", false);
+                }
+            }
+        });
+    }
+</script>

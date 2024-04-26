@@ -1,0 +1,51 @@
+<div class="row my-5 justify-content-center">
+    <div class="col-6"> 
+        <div class="card">
+            <div class="card-header text-center">
+                <h3 class="py-2">로그인</h3>
+            </div>
+            <div class="card-body">
+                <form name = "frm">
+                    <input name="uid" placeholder="아이디" class="form-control mb-3">
+                    <input name="upass" type="password" placeholder="비밀번호" class="form-control mb-3">
+                    <button class="btn btn-info w-100">로그인</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(frm).on("submit", function(e){ //jQuery 선택자 frm으로 지정된 폼에 "submit" 이벤트 핸들러를 첨부합니다. 폼이 제출되면 function(e) 함수가 실행됩니다.
+        e.preventDefault(); //폼이 제출되었을 때 브라우저가 페이지를 새로고침하거나 다른 페이지로 이동하는 기본 동작을 막을 때 사용됩니다.
+        const uid = $(frm.uid).val();
+        const upass = $(frm.upass).val();
+        if(uid==""){
+            alert("아이디를 입력하세요!");
+        }
+        else if(upass==""){
+            alert("비밀번호를 입력하세요!");
+        }
+        else{
+            //로그인체크
+            $.ajax({
+                type : "post",
+                url : "/users/login",
+                data : {uid:uid, upass:upass},
+                success : function(data) {
+                    console.log(data);
+                    if(data.result==0) {
+                        alert("아이디가 존재하지 않습니다.!");
+                    }else if(data.result==2) {
+                        alert("비밀번호가 일치하지 않습니다.")
+                    }
+                    else{
+                        alert("로그인에 성공했습니다.");
+                        sessionStorage.setItem('uid', uid); //로그인한 uid를 uid에 넣고 저장
+                        location.href="/"; //홈페이지로 이동
+                    }
+                }
+            })
+        }
+    });
+</script>

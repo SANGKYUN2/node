@@ -1,0 +1,71 @@
+<h1><%=title%></h1>
+<div class="row justify-content-center px-5">
+    <div class="col-8 card ">
+        <form class="card-body" name="frm" method="post" action="/users/update">
+            <input name="uid" value="<%=user.uid%>" type="hidden">
+            <div class="input-group mb-2">
+                <span class="input-group-text px-5">이름</span>
+                <input name="uname" class="form-control" value="<%=user.uname%>">
+            </div>
+            <div class="input-group mb-2">
+                <span class="input-group-text px-5">전화</span>
+                <input name="phone" class="form-control" value="<%=user.phone%>">
+            </div>
+            <div class="input-group mb-1">
+                <span class="input-group-text px-5">주소</span>
+                <input class="form-control" name="address1" value="<%=user.address1%>">
+                <button id="btn-search" type="button" class="btn btn-info">주소 검색</button>
+            </div>
+            <div>
+                <input name="address2" class="form-control" placeholder="상세 주소를 입력하세요."  value="<%=user.address2%>">
+            </div>
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-info">수정</button>
+                <button type="reset" class="btn btn-secondary">취소</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- <script>
+    $("#btn-search").on("click", function(){
+        new daum.Postcode({
+            oncomplete:function(data){
+                console.log(data);
+                const building = data.buildingName;
+                let address="";
+                if(building){
+                    address=`${data.address}(${building})`
+                }
+                else {
+                    address=data.address
+                }
+                $(frm.address1).val(data.address);
+            }
+        }).open();
+    });
+</script> -->
+
+<script>
+    $(frm).on("submit", function(e){
+        e.preventDefault();
+        if(confirm("정말로 수정하시겠습니까?")) {
+            frm.submit();
+        }
+    });
+$("#btn-search").on("click", function(){
+    new daum.Postcode({
+        oncomplete:function(data){
+            console.log(data);
+            const building=data.buildingName;
+            let address="";
+            if(building!=""){
+                address=`${data.address}(${building})`;
+            }else{
+                address=data.address;
+            }
+            $(frm.address1).val(address);
+        }
+    }).open();
+});
+</script>

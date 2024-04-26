@@ -3,7 +3,7 @@
     <div class="card-body">
         <div>[<%=posts.pid%>] <%=posts.title%></div>
         <hr>
-        <div><%=posts.contents%></div>
+        <div><%-posts.contents.replace(/\n/g, '<br/>')%></div>
     </div>
     <div class="card-footer" style="font-size: 12px; color: gray;">
         <span>작성자 : <%=posts.writer%></span>

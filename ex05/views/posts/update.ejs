@@ -1,0 +1,32 @@
+<h1><%=title%></h1>
+<form class="px-5" name="frm" method="post"> <!--이동하고자 하는 주소 action, method get(내용이 다 보임) or post(내용이 안보임)-->
+    <input name="uid" type="hidden">
+    <input name="pid" value="<%=post.pid%>" type="hidden">
+    <input value="<%=post.title%>" name="title" placeholder="제목을 입력하세요." class="form-control mb-2">
+    <textarea name="contents" rows="10" class="form-control" placeholder="내용을 입력하세요."><%=post.contents%></textarea>
+    <div class="text-end mt-3">
+        <button type="submit" class="btn btn-info px-3">수정</button>
+        <button type="reset" class="btn btn-info px-3">취소</button>
+    </div>
+</form>
+
+<script>
+    $(frm.uid).val(uid);
+    $(frm).on("submit", function(e){
+        e.preventDefault();
+        const title = $(frm.title).val();
+        const contents = $(frm.contents).val();
+        if(title==""){
+            alert("제목을 입력하세요.");
+        }
+        else if(contents=="") {
+            alert("내용을 입력하세요.");
+        }
+        else {
+            if(confirm("정말로 수정하시겠습니까?")){
+                frm.submit(); //posts/insert로 감
+            }
+            
+        }
+    });
+</script>
